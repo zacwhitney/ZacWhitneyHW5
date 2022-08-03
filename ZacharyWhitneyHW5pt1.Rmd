@@ -1,0 +1,34 @@
+---
+title: "wind_turbines_cali"
+author: "ZacharyWhitney"
+date: "2022-08-03"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r includes}
+library(maps)
+library(mapdata)
+library(ggplot2)
+```
+
+```{r cali}
+cali = map_data("state")
+cali = cali[cali$ region == "california", ]
+head(cali)
+```
+
+```{r win_ca, echo=FALSE}
+load(file = 'C:/users/zacha/documents/college/summer2022/datavis/week6/wind_turbines.rda')
+wind_ca = wind_turbines[wind_turbines$t_state == 'CA',]
+```
+
+```{r map_wind_ca, echo=FALSE}
+cali_data = map_data('state', 'ca')
+ggplot(cali_data, aes(x=long, y=lat)) + 
+  geom_polygon(fill = "white", colour = "grey50") +
+  geom_point(data = wind_ca, aes(x=xlong, y=ylat))
+```
